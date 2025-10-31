@@ -5,7 +5,7 @@ class UserModel {
 
     //สร้างผู้ใช้ใหม่
     static async CreateUser(name,email,password) {
-        const [result] = await pool.query("Insert into users (name,email,password) values (?,?,?) ",[name,email,password]);
+        const [result] = await pool.query("Insert into users (name,email,password,role) values (?,?,?,?) ",[name,email,password,"customer"]);
         return result.insertId;
     }
     //อัพเดทข้อมูลผู้ใช้
@@ -23,11 +23,12 @@ class UserModel {
         const [rows] = await pool.query("Select id,email,name from users");
         return rows;
     }
-    //ดึงข้อมูลตาม ID 
-    static async GetUserByID(id) {
-        const [rows] = await pool.query("Select name,email from users where id = ?",[id]);
+    //ดึงข้อมูลด้วย Email สำหรับ Login 
+    static async GetUserByEmail(email) {
+        const [rows] = await pool.query("Select * from users where email = ?",[email]);
         return rows[0];
     }
+
 }
 
 module.exports = UserModel;
