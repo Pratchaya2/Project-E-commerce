@@ -4,6 +4,7 @@ const pool = require("../configs/db");
 const users = require("../models/users");
 const {JWT_secret} = require("../configs/env");
 
+//สมัครสมาชิก
 const register = async(req,res) => {
     const {name,password,email} = req.body;
     
@@ -23,6 +24,7 @@ const register = async(req,res) => {
     }
 };
 
+//Login
 const login = async(req,res) => {
     const {email,password} = req.body;
 
@@ -53,4 +55,45 @@ const login = async(req,res) => {
     }
 }
 
-module.exports = {register,login}
+const promoteRole = async(req,res) => {
+    const {id} = req.params;
+    const {role} = req.body;
+    try{
+        result = await users.UpdateRole(id,role);
+        res.status(200).json({message:"Update role successfully"})
+    }
+    catch(error) {
+        console.log("Error update role :",error);
+        res.status(500).json({message:"Failed to update role"})
+    }
+}
+
+const deleteUser = async(req,res) => {
+    const {id} = req.params;
+    if(!id){
+        return res.status(400).json({message:"Please specify the ID to be deleted"})
+    }
+
+    try{
+        result = await users.DeleteUser(id);
+        res.status(200).json({message:"Delete user successfully"});
+    }
+
+    catch(error){
+        console.log("Error to delete user ID",error);
+        res.status(500).json({message:"Failed to delete user"})
+    }
+}
+
+const getAllUsers = async(req,res) => {
+    try{
+        const result = await users.GetAllusers();
+        res.status(200).json({message:"User retrieved successfully",data:result});
+    }
+
+    catch(error){
+        console.log("Error to retrive user ID",error);
+        res.status(500).json({message:"Failed to retrive user"})
+    }
+}
+module.exports = {register,login,promoteRole,deleteUser,getAllUsers}

@@ -8,9 +8,9 @@ class UserModel {
         const [result] = await pool.query("Insert into users (name,email,password,role) values (?,?,?,?) ",[name,email,password,"customer"]);
         return result.insertId;
     }
-    //อัพเดทข้อมูลผู้ใช้
-    static async UpdateUser(id,name,email) {
-        const [result] = await pool.query("update users SET  name = ? , email = ? where id = ?",[name,email,id]);
+    //อัพเดท role ผู้ใช้
+    static async UpdateRole(id,role) {
+        const [result] = await pool.query("update users SET role = ? where id = ?",[role,id]);
         return result.affectedRows;
     }
     //ลบผู้ใช้
@@ -20,7 +20,7 @@ class UserModel {
     }
     //ดึงข้อมูลผู้ใช้ทั้งหมด
     static async GetAllusers() {
-        const [rows] = await pool.query("Select id,email,name from users");
+        const [rows] = await pool.query("Select id,email,name,role from users");
         return rows;
     }
     //ดึงข้อมูลด้วย Email สำหรับ Login 
@@ -28,7 +28,6 @@ class UserModel {
         const [rows] = await pool.query("Select * from users where email = ?",[email]);
         return rows[0];
     }
-
 }
 
 module.exports = UserModel;
