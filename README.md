@@ -29,8 +29,10 @@
     - สร้าง ProductModel CRUD 
     - สร้าง ProductController สร้างสินค้า และเรียกดู products ทั้งหมดของ seller (controll ยังไม่เสร็จ)
     - สร้าง Route for add new product successfully
+
 - [Day 5]
     - สร้าง model / controller/ Route CRUD product
+
 - [Day 6]
     - สร้าง model / controller / route CRUD order
 
@@ -74,5 +76,4 @@
         deletedOrders: delOrder.affectedRows,
         deletedOrderItems: delOrderItem.affectedRows
     };
-12.
 
