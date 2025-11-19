@@ -241,7 +241,7 @@ Response :
     ]
 }
 ```
-### 3.2 Delete order (customer,admin)
+### 3.3 Delete order (customer,admin)
 GET ```api/orders/delete/:id```
 
 Response :
